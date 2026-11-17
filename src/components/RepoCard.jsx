@@ -1,14 +1,5 @@
-import {
-  ArrowUpRightIcon,
-  ForkIcon,
-  StarIcon,
-} from './Icons.jsx'
-import {
-  compactNumber,
-  languageColor,
-  prettyLanguage,
-  timeAgo,
-} from '../lib/format.js'
+import { ArrowUpRightIcon, ForkIcon, StarIcon } from './Icons.jsx'
+import { compactNumber, languageColor, prettyLanguage, timeAgo } from '../lib/format.js'
 
 export default function RepoCard({ repo, rank }) {
   return (
@@ -39,9 +30,7 @@ export default function RepoCard({ repo, rank }) {
         {repo.name}
       </a>
 
-      <p className="repo-card__desc">
-        {repo.description || 'No description provided.'}
-      </p>
+      <p className="repo-card__desc">{repo.description || 'No description provided.'}</p>
 
       {repo.topics?.length > 0 && (
         <div className="repo-card__topics">

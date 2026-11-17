@@ -104,10 +104,7 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
 
-  const handlePick = useCallback(
-    (username) => runSearch(username),
-    [runSearch],
-  )
+  const handlePick = useCallback((username) => runSearch(username), [runSearch])
 
   const handleRetry = useCallback(() => runSearch(query), [query, runSearch])
 
@@ -149,11 +146,7 @@ export default function App() {
             )}
 
             {status === 'error' && (
-              <ErrorState
-                error={error}
-                onRetry={handleRetry}
-                onHome={handleHome}
-              />
+              <ErrorState error={error} onRetry={handleRetry} onHome={handleHome} />
             )}
           </>
         )}

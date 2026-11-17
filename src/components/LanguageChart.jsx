@@ -2,64 +2,63 @@ import { useMemo } from 'react'
 import { languageColor, prettyLanguage } from '../lib/format.js'
 
 export default function LanguageChart({ repos }) {
-  const { segments, entries, sourceCount, languageCount, withLanguage } =
-    useMemo(() => {
-      const source = repos.filter((repo) => !repo.fork)
-      const counts = new Map()
-      for (const repo of source) {
-        if (!repo.language) continue
-        counts.set(repo.language, (counts.get(repo.language) || 0) + 1)
+  const { segments, entries, sourceCount, languageCount, withLanguage } = useMemo(() => {
+    const source = repos.filter((repo) => !repo.fork)
+    const counts = new Map()
+    for (const repo of source) {
+      if (!repo.language) continue
+      counts.set(repo.language, (counts.get(repo.language) || 0) + 1)
+    }
+
+    const total = [...counts.values()].reduce((sum, count) => sum + count, 0)
+    const sorted = [...counts.entries()]
+      .map(([name, count]) => ({
+        name,
+        count,
+        pct: total > 0 ? (count / total) * 100 : 0,
+      }))
+      .sort((a, b) => b.count - a.count)
+
+    let chartEntries = sorted.slice(0, 5)
+    if (sorted.length > 5) {
+      const rest = sorted.slice(5)
+      const restCount = rest.reduce((sum, entry) => sum + entry.count, 0)
+      chartEntries = [
+        ...chartEntries,
+        {
+          name: 'Other',
+          count: restCount,
+          pct: total > 0 ? (restCount / total) * 100 : 0,
+          other: true,
+        },
+      ]
+    }
+
+    const radius = 46
+    const circumference = 2 * Math.PI * radius
+    let cursor = 0
+    const chartSegments = chartEntries.map((entry) => {
+      const arc = (entry.pct / 100) * circumference
+      const gap = chartEntries.length > 1 ? 4 : 0
+      const visibleArc = Math.max(arc - gap, 0)
+      const segment = {
+        ...entry,
+        color: entry.other ? '#4b5a66' : languageColor(entry.name),
+        dasharray: `${visibleArc} ${circumference - visibleArc}`,
+        dashoffset: -cursor,
       }
+      cursor += arc
+      return segment
+    })
 
-      const total = [...counts.values()].reduce((sum, count) => sum + count, 0)
-      const sorted = [...counts.entries()]
-        .map(([name, count]) => ({
-          name,
-          count,
-          pct: total > 0 ? (count / total) * 100 : 0,
-        }))
-        .sort((a, b) => b.count - a.count)
-
-      let chartEntries = sorted.slice(0, 5)
-      if (sorted.length > 5) {
-        const rest = sorted.slice(5)
-        const restCount = rest.reduce((sum, entry) => sum + entry.count, 0)
-        chartEntries = [
-          ...chartEntries,
-          {
-            name: 'Other',
-            count: restCount,
-            pct: total > 0 ? (restCount / total) * 100 : 0,
-            other: true,
-          },
-        ]
-      }
-
-      const radius = 46
-      const circumference = 2 * Math.PI * radius
-      let cursor = 0
-      const chartSegments = chartEntries.map((entry, index) => {
-        const arc = (entry.pct / 100) * circumference
-        const gap = chartEntries.length > 1 ? 4 : 0
-        const visibleArc = Math.max(arc - gap, 0)
-        const segment = {
-          ...entry,
-          color: entry.other ? '#4b5a66' : languageColor(entry.name, index),
-          dasharray: `${visibleArc} ${circumference - visibleArc}`,
-          dashoffset: -cursor,
-        }
-        cursor += arc
-        return segment
-      })
-
-      return {
-        segments: chartSegments,
-        entries: chartEntries,
-        sourceCount: source.length,
-        languageCount: counts.size,
-        withLanguage: total,
-      }
-    }, [repos])
+    return {
+      segments: chartSegments,
+      entries: chartEntries,
+      sourceCount: source.length,
+      languageCount: counts.size,
+      withLanguage: total,
+    }
+  }, [repos])
 
   return (
     <section className="panel languages">
@@ -73,8 +72,8 @@ export default function LanguageChart({ repos }) {
 
       {segments.length === 0 ? (
         <p className="empty">
-          No language data yet — this account has no source repositories with a
-          detected language.
+          No language data yet — this account has no source repositories with a detected
+          language.
         </p>
       ) : (
         <div className="languages__body">
@@ -85,13 +84,7 @@ export default function LanguageChart({ repos }) {
               role="img"
               aria-label={`Language distribution across ${withLanguage} repositories`}
             >
-              <circle
-                className="donut__track"
-                cx="60"
-                cy="60"
-                r="46"
-                fill="none"
-              />
+              <circle className="donut__track" cx="60" cy="60" r="46" fill="none" />
               {segments.map((segment) => (
                 <circle
                   key={segment.name}
@@ -114,14 +107,12 @@ export default function LanguageChart({ repos }) {
           </div>
 
           <ul className="legend">
-            {entries.map((entry, index) => (
+            {entries.map((entry) => (
               <li className="legend__item" key={entry.name}>
                 <span
                   className="legend__dot"
                   style={{
-                    background: entry.other
-                      ? '#4b5a66'
-                      : languageColor(entry.name, index),
+                    background: entry.other ? '#4b5a66' : languageColor(entry.name),
                   }}
                 />
                 <span className="legend__name">
@@ -138,8 +129,7 @@ export default function LanguageChart({ repos }) {
       )}
 
       <p className="panel__footnote">
-        Shares are based on source (non-fork) repositories, one language per
-        repo.
+        Shares are based on source (non-fork) repositories, one language per repo.
       </p>
     </section>
   )

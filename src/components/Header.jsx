@@ -4,7 +4,12 @@ export default function Header({ onHome, rate, fromCache = false }) {
   return (
     <header className="topbar">
       <div className="container topbar__inner">
-        <button className="brand" type="button" onClick={onHome} aria-label="DevPulse home">
+        <button
+          className="brand"
+          type="button"
+          onClick={onHome}
+          aria-label="DevPulse home"
+        >
           <span className="brand__mark">
             <PulseMark />
           </span>
@@ -15,7 +20,10 @@ export default function Header({ onHome, rate, fromCache = false }) {
         <div className="topbar__right">
           {fromCache && <span className="pill pill--cache">Cached</span>}
           {rate && Number.isFinite(rate.remaining) && (
-            <span className="pill pill--quota" title="GitHub API requests remaining this hour">
+            <span
+              className="pill pill--quota"
+              title="GitHub API requests remaining this hour"
+            >
               <span className="pill__dot" />
               API {rate.remaining}/{rate.limit}
             </span>

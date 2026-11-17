@@ -9,11 +9,7 @@ import {
   StarIcon,
   TagIcon,
 } from './Icons.jsx'
-import {
-  formatDateTime,
-  repoShortName,
-  timeAgo,
-} from '../lib/format.js'
+import { formatDateTime, repoShortName, timeAgo } from '../lib/format.js'
 
 const EVENT_STYLES = {
   PushEvent: { icon: GitCommitIcon, tone: 'green' },
@@ -104,10 +100,7 @@ function describe(event) {
       )
     default:
       return (
-        <>
-          {capitalize(event.type.replace(/Event$/, '').replace(/([A-Z])/g, ' $1'))}{' '}
-          in
-        </>
+        <>{capitalize(event.type.replace(/Event$/, '').replace(/([A-Z])/g, ' $1'))} in</>
       )
   }
 }
@@ -129,9 +122,7 @@ export default function ActivityFeed({ events }) {
       </div>
 
       {recent.length === 0 ? (
-        <p className="empty">
-          No recent public activity found for this account.
-        </p>
+        <p className="empty">No recent public activity found for this account.</p>
       ) : (
         <ol className="timeline">
           {recent.map((event) => {

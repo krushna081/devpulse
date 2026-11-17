@@ -1,9 +1,4 @@
-import {
-  RepoIcon,
-  StarIcon,
-  UserPlusIcon,
-  UsersIcon,
-} from './Icons.jsx'
+import { RepoIcon, StarIcon, UserPlusIcon, UsersIcon } from './Icons.jsx'
 import { compactNumber, formatNumber } from '../lib/format.js'
 
 export default function StatsGrid({ user, repos }) {
@@ -12,10 +7,7 @@ export default function StatsGrid({ user, repos }) {
     (sum, repo) => sum + (repo.stargazers_count || 0),
     0,
   )
-  const totalForks = sourceRepos.reduce(
-    (sum, repo) => sum + (repo.forks_count || 0),
-    0,
-  )
+  const totalForks = sourceRepos.reduce((sum, repo) => sum + (repo.forks_count || 0), 0)
 
   const stats = [
     {
@@ -31,7 +23,8 @@ export default function StatsGrid({ user, repos }) {
       index: '02',
       label: 'Stars earned',
       value: totalStars,
-      display: totalStars >= 10_000 ? compactNumber(totalStars) : formatNumber(totalStars),
+      display:
+        totalStars >= 10_000 ? compactNumber(totalStars) : formatNumber(totalStars),
       note: `${formatNumber(totalForks)} forks across sources`,
       icon: StarIcon,
       tone: 'amber',
@@ -40,7 +33,10 @@ export default function StatsGrid({ user, repos }) {
       index: '03',
       label: 'Followers',
       value: user.followers,
-      display: user.followers >= 10_000 ? compactNumber(user.followers) : formatNumber(user.followers),
+      display:
+        user.followers >= 10_000
+          ? compactNumber(user.followers)
+          : formatNumber(user.followers),
       note: 'watching this profile',
       icon: UsersIcon,
       tone: 'cyan',

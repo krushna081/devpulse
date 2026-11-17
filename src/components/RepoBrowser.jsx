@@ -1,16 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import {
-  ArrowUpRightIcon,
-  ForkIcon,
-  SearchIcon,
-  StarIcon,
-} from './Icons.jsx'
-import {
-  compactNumber,
-  languageColor,
-  prettyLanguage,
-  timeAgo,
-} from '../lib/format.js'
+import { ArrowUpRightIcon, ForkIcon, SearchIcon, StarIcon } from './Icons.jsx'
+import { compactNumber, languageColor, prettyLanguage, timeAgo } from '../lib/format.js'
 
 const PAGE_SIZE = 8
 
@@ -66,8 +56,7 @@ export default function RepoBrowser({ repos, publicRepoCount }) {
     } else if (sort === 'updated') {
       sorted.sort(
         (a, b) =>
-          new Date(b.pushed_at || b.updated_at) -
-          new Date(a.pushed_at || a.updated_at),
+          new Date(b.pushed_at || b.updated_at) - new Date(a.pushed_at || a.updated_at),
       )
     } else {
       sorted.sort((a, b) => a.name.localeCompare(b.name))
@@ -108,10 +97,7 @@ export default function RepoBrowser({ repos, publicRepoCount }) {
 
         <label className="field field--select">
           <span className="sr-only">Sort repositories</span>
-          <select
-            value={sort}
-            onChange={(event) => setSort(event.target.value)}
-          >
+          <select value={sort} onChange={(event) => setSort(event.target.value)}>
             {SORTS.map((option) => (
               <option value={option.value} key={option.value}>
                 {option.label}
@@ -146,10 +132,7 @@ export default function RepoBrowser({ repos, publicRepoCount }) {
             className={`chip chip--filter ${language === name ? 'is-active' : ''}`}
             onClick={() => setLanguage(name)}
           >
-            <i
-              className="lang-dot"
-              style={{ background: languageColor(name) }}
-            />
+            <i className="lang-dot" style={{ background: languageColor(name) }} />
             {prettyLanguage(name)}
             <span className="chip__count">{count}</span>
           </button>

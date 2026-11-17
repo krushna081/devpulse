@@ -65,8 +65,8 @@ export default function DataCard({ rate, fromCache, repos, events, user }) {
       </dl>
 
       <p className="panel__footnote">
-        GitHub allows 60 unauthenticated API requests per hour per IP address.
-        DevPulse reads public data only and caches profiles for five minutes.
+        GitHub allows 60 unauthenticated API requests per hour per IP address. DevPulse
+        reads public data only and caches profiles for five minutes.
       </p>
 
       <a
@@ -75,8 +75,7 @@ export default function DataCard({ rate, fromCache, repos, events, user }) {
         target="_blank"
         rel="noreferrer"
       >
-        <GitHubIcon />
-        @{user.login}
+        <GitHubIcon />@{user.login}
         <ArrowUpRightIcon />
       </a>
     </aside>

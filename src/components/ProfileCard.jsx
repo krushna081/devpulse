@@ -128,7 +128,9 @@ export default function ProfileCard({ user }) {
 
         <div className="profile__badges">
           {user.hireable && <span className="badge badge--accent">Open to work</span>}
-          <span className="badge">{pluralize(user.public_repos ?? 0, 'public repo')}</span>
+          <span className="badge">
+            {pluralize(user.public_repos ?? 0, 'public repo')}
+          </span>
           <span className="badge">{pluralize(user.public_gists ?? 0, 'gist')}</span>
           {user.site_admin && <span className="badge">GitHub staff</span>}
         </div>

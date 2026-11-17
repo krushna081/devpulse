@@ -117,10 +117,7 @@ export async function loadUser(rawUsername) {
     throw new GitHubError('Enter a GitHub username to get started.', 'invalid')
   }
   if (!USERNAME_RE.test(username)) {
-    throw new GitHubError(
-      'That does not look like a valid GitHub username.',
-      'invalid',
-    )
+    throw new GitHubError('That does not look like a valid GitHub username.', 'invalid')
   }
 
   const cacheKey = `${CACHE_PREFIX}${username.toLowerCase()}`
@@ -135,19 +132,16 @@ export async function loadUser(rawUsername) {
 
   // Public events are optional: some accounts have none, and a failure here
   // should not hide the rest of the dashboard.
-  const eventsResult = await request(
-    `/users/${encoded}/events/public?per_page=30`,
-  ).catch(() => null)
+  const eventsResult = await request(`/users/${encoded}/events/public?per_page=30`).catch(
+    () => null,
+  )
 
-  const events = (eventsResult?.data ?? [])
-    .map(trimEvent)
-    .filter(Boolean)
+  const events = (eventsResult?.data ?? []).map(trimEvent).filter(Boolean)
 
   const rate = [userResult.rate, reposResult.rate, eventsResult?.rate]
     .filter((entry) => entry && Number.isFinite(entry.remaining))
     .reduce(
-      (lowest, entry) =>
-        !lowest || entry.remaining < lowest.remaining ? entry : lowest,
+      (lowest, entry) => (!lowest || entry.remaining < lowest.remaining ? entry : lowest),
       null,
     )
 

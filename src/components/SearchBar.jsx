@@ -36,11 +36,7 @@ export default function SearchBar({
   }
 
   return (
-    <form
-      className={`search search--${size}`}
-      role="search"
-      onSubmit={handleSubmit}
-    >
+    <form className={`search search--${size}`} role="search" onSubmit={handleSubmit}>
       <SearchIcon className="search__icon" />
       <label className="sr-only" htmlFor={`github-user-${size}`}>
         GitHub username

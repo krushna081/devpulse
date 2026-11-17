@@ -34,11 +34,29 @@ Open the URL Vite prints (usually `http://localhost:5173`).
 
 ### Scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the Vite dev server |
-| `npm run build` | Build for production into `dist/` |
-| `npm run preview` | Preview the production build |
+| Command                | Description                              |
+| ---------------------- | ---------------------------------------- |
+| `npm run dev`          | Start the Vite dev server                |
+| `npm run build`        | Build for production into `dist/`        |
+| `npm run preview`      | Preview the production build             |
+| `npm run lint`         | Run ESLint                               |
+| `npm run format`       | Format files with Prettier               |
+| `npm run format:check` | Verify formatting without changing files |
+| `npm test`             | Run the Vitest suite                     |
+| `npm run check`        | Lint, format check, test, and build      |
+
+## Verification
+
+```bash
+npm ci
+npm run lint
+npm run format:check
+npm test
+npm run build
+npm audit --omit=dev --audit-level=high
+```
+
+CI runs the same checks on every push to `main` and every pull request.
 
 ## Deploying to Vercel
 
@@ -48,6 +66,10 @@ Open the URL Vite prints (usually `http://localhost:5173`).
    - **Build command:** `npm run build`
    - **Output directory:** `dist`
 4. Deploy. No environment variables are required.
+
+`vercel.json` adds a Content Security Policy, HSTS, frame protection, MIME
+sniffing protection, a strict referrer policy, and a restrictive permissions
+policy. The CSP allows Google Fonts and GitHub avatar images only.
 
 ## How it works
 
@@ -76,6 +98,7 @@ No token is used on the client, intentionally — shipping a GitHub token in a f
 │   │   ├── ActivityFeed.jsx
 │   │   ├── Dashboard.jsx
 │   │   ├── DataCard.jsx
+│   │   ├── ErrorBoundary.jsx
 │   │   ├── ErrorState.jsx
 │   │   ├── Footer.jsx
 │   │   ├── Header.jsx
@@ -90,12 +113,17 @@ No token is used on the client, intentionally — shipping a GitHub token in a f
 │   │   └── StatsGrid.jsx
 │   ├── lib/
 │   │   ├── format.js
-│   │   └── github.js
+│   │   ├── format.test.js
+│   │   ├── github.js
+│   │   └── github.test.js
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── styles.css
+├── .github/workflows/ci.yml
 ├── index.html
 ├── package.json
+├── vercel.json
+├── eslint.config.js
 └── vite.config.js
 ```
 

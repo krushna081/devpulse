@@ -47,9 +47,8 @@ export default function Hero({
         </h1>
 
         <p className="hero__lede">
-          DevPulse turns a GitHub username into a clean, live dashboard —
-          reputation, language DNA, top repositories, and recent activity in one
-          scan.
+          DevPulse turns a GitHub username into a clean, live dashboard — reputation,
+          language DNA, top repositories, and recent activity in one scan.
         </p>
 
         <SearchBar
@@ -57,7 +56,6 @@ export default function Hero({
           onChange={onQueryChange}
           onSubmit={onSubmit}
           loading={loading}
-          autoFocus
         />
 
         <div className="hero__examples">

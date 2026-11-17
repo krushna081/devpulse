@@ -39,16 +39,9 @@ const LANGUAGE_COLORS = {
   MDX: '#fcb32c',
 }
 
-const FALLBACK_COLORS = [
-  '#39ff88',
-  '#37c8ff',
-  '#ff3d81',
-  '#ffb020',
-  '#a78bfa',
-  '#2dd4bf',
-]
+const FALLBACK_COLORS = ['#39ff88', '#37c8ff', '#ff3d81', '#ffb020', '#a78bfa', '#2dd4bf']
 
-export function languageColor(language, index = 0) {
+export function languageColor(language) {
   if (!language) return '#4b5a66'
   if (LANGUAGE_COLORS[language]) return LANGUAGE_COLORS[language]
   let hash = 0

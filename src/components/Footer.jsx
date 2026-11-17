@@ -3,8 +3,8 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <p>
-          DevPulse is a read-only GitHub dashboard built with React + Vite. Data
-          comes from the{' '}
+          DevPulse is a read-only GitHub dashboard built with React + Vite. Data comes
+          from the{' '}
           <a href="https://docs.github.com/rest" target="_blank" rel="noreferrer">
             GitHub REST API
           </a>
